@@ -1,15 +1,15 @@
-const { otpCreate } =require ('../services/otpService');
+const { otpCreate,otpVerify } =require ('../services/otpService');
 
 const userAuth = require('../services/auth')
 const sendgrid = require('@sendgrid/mail');
-const SENDGRID_API_KEY = "<SENDGRID_API_KEY>"
+const SENDGRID_API_KEY = "SG.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"
 sendgrid.setApiKey(SENDGRID_API_KEY)
 
 
 const otpSend = async(email,callback)=>{
     const otp = Math.round(Math.random() * 9000)
     const msg = {
-        to: mail,
+        to: email,
       // Change to your recipient
         from: process.env.GMAIL,
       // Change to your verified sender
@@ -62,7 +62,16 @@ const otpSend = async(email,callback)=>{
     
 };
 
+ /* -------------------------------- otpverify ------------------------------- */
 
+ const otpVerifyRouteFun = (req,res)=>{
+   const {otp} = req.body
+   otpVerify(otp).then(result=>{
+    res.json({user:{name:'shambu'}})
+   }).catch(err=>{
+    res.json(err)
+   })
+ }
 
 /* ------------------------ this function for Login ------------------------ */
  const userLogin = (req,res)=> {
@@ -78,6 +87,7 @@ const otpSend = async(email,callback)=>{
 
  module.exports={
     userSignup,
-    userLogin
+    userLogin,
+    otpVerifyRouteFun
  }
  

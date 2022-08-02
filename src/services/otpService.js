@@ -15,6 +15,22 @@ const OtpCollection = require("../models/otpSchema")
     })
 }
 
+const otpVerify =(email,otp)=>{
+    return new Promise((resolve,reject)=>{
+        OtpCollection.findOne({email:email},(err,data)=>{
+            if(data){
+                if(data.otp == otp){
+                    resolve(true)
+                }else{
+                    reject("invalid otp")
+                }
+            }else{
+                reject("error")
+            }
+        })
+    })
+}
 module.exports = {
-    otpCreate
+    otpCreate,
+    otpVerify
 }
