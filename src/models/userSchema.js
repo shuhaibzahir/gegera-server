@@ -18,4 +18,4 @@ const userSignupSchema = mongoose.Schema({
         required:true
     }
 });
-module.exports = mongoose.model('users',userSignupSchema);
+module.exports =  mongoose.model('users',userSignupSchema);

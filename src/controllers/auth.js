@@ -1,34 +1,34 @@
 const { otpCreate } =require ('../services/otpService');
 
 const userAuth = require('../services/auth')
-const nodemailer = require("nodemailer");
+const sendgrid = require('@sendgrid/mail');
+const SENDGRID_API_KEY = "<SENDGRID_API_KEY>"
+sendgrid.setApiKey(SENDGRID_API_KEY)
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL,
-      pass: process.env.PASSWORD_GMAIL
-    }
-  });
 
 const otpSend = async(email,callback)=>{
     const otp = Math.round(Math.random() * 9000)
-    const mailOptions = {
+    const msg = {
+        to: mail,
+      // Change to your recipient
         from: process.env.GMAIL,
-        to: email,
-        subject: 'Sending Email using Node.js',
-        text: `this is your otp ${otp} `
-      };
+      // Change to your verified sender
+        subject: 'Sending with SendGrid Is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: `strong>this is your otp ${otp}</strong>`,
+     }
       try{
-          await otpCreate(email,otp)
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-             callback(err,null)
-            } else {
-                callback(null,err)
-              console.log('Email sent: ' + info.response);
-            }
-          });
+        //   await otpCreate(email,otp)
+        sendgrid
+       .send(msg)
+       .then((resp) => {
+         console.log('Email sent\n', resp)
+         callback(null, resp)
+       })
+       .catch((error) => {
+        callback(error,null)
+         console.error(error)
+     })
       }catch(error){
         callback(error,null)
       }
