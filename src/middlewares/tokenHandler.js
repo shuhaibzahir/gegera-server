@@ -1,4 +1,4 @@
-const jwt = require('jwt');
+const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/constants');
 
 const exist = (params,res,next)=>{

@@ -2,7 +2,7 @@ const UserSignupDetails  = require('../models/userSchema');
 
 module.exports = {
     userDetailsExistOrNot:(email)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
         const isUserExist = await UserSignupDetails.findOne({email});
         if(isUserExist){
             reject(isUserExist);

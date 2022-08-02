@@ -4,11 +4,13 @@ const {dbConnect} = require("./src/config/db");
 const CONSTANT = require("./src/config/constants");
 const auth = require('./src/routers/auth');
 const userRoute = require('./src/routers/users/routes')
-const proUserRoute = require('./src/routers/proUsers')
+// const proUserRoute = require('./src/routers/proUsers')
 const app = express();
 const port = 4000;
 
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
+
 dbConnect(CONSTANT.dbUrl);
 
 
@@ -24,7 +26,7 @@ app.use('/api/user/',userRoute)
 
 // pro users
 
-app.use('/api/user/',proUserRoute)
+// app.use('/api/user/',proUserRoute)
 
 
 //admin
