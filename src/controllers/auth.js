@@ -11,7 +11,7 @@ const otpSend = async(email,callback)=>{
     const msg = {
         to: email,
       // Change to your recipient
-        from: process.env.GMAIL,
+        from: "shinushinu01997@gmail.com",
       // Change to your verified sender
         subject: 'Sending with SendGrid Is Fun',
         text: 'and easy to do anywhere, even with Node.js',
